@@ -1,0 +1,161 @@
+# Environment variables
+.env
+.env.local
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv
+distill_env/
+deeplearning/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb_checkpoints/
+
+# PyCharm
+.idea/
+
+# VS Code
+.vscode/
+
+# Dataset and large data files
+data/FaceForensics++/original_sequences/youtube/c23/frames/
+data/FaceForensics++/original_sequences/youtube/c23/videos/
+data/FaceForensics++/original_sequences/youtube/c23/landmarks/
+data/FaceForensics++/original_sequences/youtube/c23/retina/
+data/manipulated_sequences/
+data/original_sequences/
+data/Celeb-DF-v2/
+downloaded_data/
+processed_data/
+*.mp4
+*.avi
+*.mov
+*.mkv
+
+# Model weights and checkpoints
+weights/*.pth
+weights/*.pt
+weights/*.ckpt
+weights/*.h5
+weights/*.tar
+!weights/.gitkeep
+output/*/weights/*
+*.pth
+*.pt
+!mobilevit_s.pt
+
+# Training outputs and logs
+output/*/logs/
+output/*/checkpoints/
+logs/
+*.logs
+wandb/
+!wandb/.gitkeep
+runs/
+tensorboard/
+
+# Compressed files
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.rar
+*.7z
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*~
+
+# Docker
+*.dockerfile.swp
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+tmp/
+temp/
+
+# Test and debug files
+test_output/
+debug_output/
+
+# Compiled files
+*.o
+*.a
+*.lib
+*.dll
+*.dylib
+*.exe
+
+# IDEs and editors
+*.sublime-project
+*.sublime-workspace
+.project
+.classpath
+.settings/
+*.launch
+.cproject
+.autotools
+.pydevproject
+
+# Documentation builds
+docs/_build/
+site/
+
+# Coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/

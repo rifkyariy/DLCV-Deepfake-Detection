@@ -1,0 +1,12 @@
+{
+    "image_size": 480,
+    "batch_size": 16,
+    "epoch": 100,
+    "lr": 0.001,
+    "session_name": "sbi_run_efficientnetv2_m_480",
+    "wandb_project": "DeepSocial-Detector",
+    "wandb_entity": "rifkyariy-x",
+    "backbone_name": "EfficientNetV2-M",
+    "num_workers": 2,
+    "early_stop_patience": 15
+}
