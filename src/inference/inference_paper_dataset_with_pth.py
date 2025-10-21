@@ -27,8 +27,26 @@ def main(args):
 
     model=Detector()
     model=model.to(device)
-    cnn_sd=torch.load(args.weight_name)
-    model.load_state_dict(cnn_sd)
+    
+    # Load model weights (handles both compressed and regular checkpoints)
+    print(f"Loading model from: {args.weight_name}")
+    if args.compressed:
+        print("Loading compressed checkpoint...")
+        missing_keys, unexpected_keys = model.load_compressed_state_dict(
+            args.weight_name, 
+            strict=False
+        )
+        if missing_keys:
+            print(f"⚠ Missing keys: {len(missing_keys)}")
+        if unexpected_keys:
+            print(f"⚠ Unexpected keys: {len(unexpected_keys)}")
+        print("✓ Compressed model loaded successfully!")
+    else:
+        print("Loading regular checkpoint...")
+        cnn_sd = torch.load(args.weight_name, map_location=device)
+        model.load_state_dict(cnn_sd, strict=False)
+        print("✓ Model loaded successfully!")
+    
     model.eval()
 
     face_detector = get_model("resnet50_2020-07-20", max_size=2048,device=device)
@@ -79,10 +97,6 @@ def main(args):
     print(f'{args.dataset}| AUC: {auc:.4f}')
 
 
-
-
-
-
 if __name__=='__main__':
 
     seed=1
@@ -96,9 +110,11 @@ if __name__=='__main__':
     device = torch.device('cuda')
 
     parser=argparse.ArgumentParser()
-    parser.add_argument('-w',dest='weight_name',type=str)
-    parser.add_argument('-d',dest='dataset',type=str)
-    parser.add_argument('-n',dest='n_frames',default=32,type=int)
+    parser.add_argument('-w',dest='weight_name',type=str, help='Path to model weights (.pth file)')
+    parser.add_argument('-d',dest='dataset',type=str, help='Dataset name (FFIW, FF, DFD, DFDC, DFDCP, CDF)')
+    parser.add_argument('-n',dest='n_frames',default=32,type=int, help='Number of frames to extract')
+    parser.add_argument('--compressed', action='store_true', 
+                        help='Use this flag if loading a compressed model (8-bit or 16-bit quantized)')
     args=parser.parse_args()
 
     main(args)

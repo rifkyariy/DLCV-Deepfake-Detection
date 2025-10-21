@@ -15,6 +15,31 @@ sys.path.insert(0, src_dir)
 
 from utils.sam import SAM 
 
+def decompress_state_dict(compressed_dict):
+    """
+    Decompress the state dictionary back to float32
+    Handles both compressed and regular state dicts
+    """
+    state_dict = {}
+    
+    for key, value in compressed_dict.items():
+        if isinstance(value, dict) and 'quantized' in value:
+            # Dequantize
+            quantized = value['quantized']
+            min_val = value['min']
+            scale = value['scale']
+            
+            decompressed = quantized.float() * scale + min_val
+            state_dict[key] = decompressed.reshape(value['shape'])
+        else:
+            # Convert float16 back to float32 if needed
+            if isinstance(value, torch.Tensor) and value.dtype == torch.float16:
+                state_dict[key] = value.float()
+            else:
+                state_dict[key] = value
+    
+    return state_dict
+
 class Detector(nn.Module):
     """
     A deepfake detector model using EfficientNetV2-S as the backbone
@@ -30,16 +55,14 @@ class Detector(nn.Module):
             num_classes (int): The number of output classes for the classifier.
         """
         super(Detector, self).__init__()
-
-        # 1. Load the pre-trained EfficientNetV2-S model using the modern weights API
+        
+        # 1. Load the pre-trained EfficientNetV2-S model
         weights = EfficientNet_V2_S_Weights.DEFAULT
         self.net = efficientnet_v2_s(weights=weights)
 
-        # 2. Replace the final classifier layer for your specific task
-        # Get the number of input features from the original classifier
+        # 2. Replace the final classifier layer
         in_features = self.net.classifier[1].in_features
         
-        # Create a new sequential classifier with a linear layer for `num_classes`
         self.net.classifier = nn.Sequential(
             nn.Dropout(p=0.2, inplace=True),
             nn.Linear(in_features, num_classes)
@@ -48,18 +71,44 @@ class Detector(nn.Module):
         # 3. Define the loss function
         self.cel = nn.CrossEntropyLoss()
         
-        # 4. Initialize the SAM optimizer, which wraps a base optimizer (SGD)
-        # The training script in train.py will access this `optimizer` attribute.
+        # 4. Initialize the SAM optimizer
         self.optimizer = SAM(self.parameters(), torch.optim.SGD, lr=lr, momentum=0.9)
 
     def forward(self, x):
         """Defines the forward pass of the model."""
         return self.net(x)
     
+    def load_compressed_state_dict(self, state_dict_path, strict=True):
+        """
+        Load state dict from either compressed or regular checkpoint
+        
+        Args:
+            state_dict_path: Path to .pth file
+            strict: Whether to strictly enforce that the keys match
+        """
+        # Load the state dict
+        checkpoint = torch.load(state_dict_path, map_location='cpu')
+        
+        # Check if it's compressed
+        is_compressed = False
+        for key, value in checkpoint.items():
+            if isinstance(value, dict) and 'quantized' in value:
+                is_compressed = True
+                break
+        
+        # Decompress if needed
+        if is_compressed:
+            print("Detected compressed checkpoint, decompressing...")
+            state_dict = decompress_state_dict(checkpoint)
+        else:
+            state_dict = checkpoint
+        
+        # Load into model
+        return self.load_state_dict(state_dict, strict=strict)
+    
     def training_step(self, x, target):
         """
         Performs a single training step using the SAM optimizer.
-        This method is called directly from your train.py loop.
         """
         for i in range(2):
             pred_cls = self(x)

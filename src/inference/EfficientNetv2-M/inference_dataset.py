@@ -1,20 +1,21 @@
 import os
 import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import torch.optim as optim
+from torchvision import datasets,transforms,models,utils
 import numpy as np
+import matplotlib.pyplot as plt
+import os
+import pandas as pd
+from PIL import Image
+import sys
 import random
+import shutil
+from model import Detector
 import argparse
 from datetime import datetime
 from tqdm import tqdm
-from functools import partial
-import multiprocessing
-import sys
-
-# Add project's 'src' directory to the path if needed
-current_dir = os.path.dirname(os.path.abspath(__file__))
-src_dir = os.path.dirname(os.path.dirname(os.path.dirname(current_dir)))
-sys.path.insert(0, src_dir)
-
-from model import Detector 
 from retinaface.pre_trained_models import get_model
 from preprocess import extract_frames
 from datasets import *
@@ -22,99 +23,83 @@ from sklearn.metrics import confusion_matrix, roc_auc_score
 import warnings
 warnings.filterwarnings('ignore')
 
-# --- Global variables for worker processes ---
-model = None
-face_detector = None
-device = None
+def main(args):
 
-def preload_models():
-    """
-    Initializes models once in the main process to download and cache weights.
-    This prevents race conditions and redundant downloads by worker processes.
-    """
-    print("Pre-loading models to cache...")
-    # Load RetinaFace and EfficientNetV2 weights into the cache on the CPU.
-    # We only need to trigger the download, not use the models here.
-    get_model("resnet50_2020-07-20", max_size=2048, device='cpu')
-    Detector()
-    print("Models are cached.")
-# --------------------------------------
-
-def init_worker(weight_name, dev_str):
-    """
-    Initializer for each worker. Now loads models from the pre-warmed cache.
-    """
-    global model, face_detector, device
-    device = torch.device(dev_str)
-
-    model = Detector()
-    model = model.to(device)
-    cnn_sd = torch.load(weight_name, map_location=device)["model"]
-    model.load_state_dict(cnn_sd)
+    model=Detector()
+    model=model.to(device)
+    
+    # Load model weights (handles both compressed and regular checkpoints)
+    print(f"Loading model from: {args.weight_name}")
+    if args.compressed:
+        print("Loading compressed checkpoint...")
+        missing_keys, unexpected_keys = model.load_compressed_state_dict(
+            args.weight_name, 
+            strict=False
+        )
+        if missing_keys:
+            print(f"⚠ Missing keys: {len(missing_keys)}")
+        if unexpected_keys:
+            print(f"⚠ Unexpected keys: {len(unexpected_keys)}")
+        print("✓ Compressed model loaded successfully!")
+    else:
+        print("Loading regular checkpoint...")
+        cnn_sd = torch.load(args.weight_name, map_location=device)
+        model.load_state_dict(cnn_sd, strict=False)
+        print("✓ Model loaded successfully!")
+    
     model.eval()
 
-    face_detector = get_model("resnet50_2020-07-20", max_size=2048, device=device)
+    face_detector = get_model("resnet50_2020-07-20", max_size=2048,device=device)
     face_detector.eval()
 
-def process_video(filename, n_frames):
-    """
-    Processes a single video file.
-    """
-    global model, face_detector, device
-    try:
-        face_list, idx_list = extract_frames(filename, n_frames, face_detector)
-
-        if not face_list:
-            return 0.5
-
-        with torch.no_grad():
-            img_tensor = torch.tensor(face_list).to(device).float() / 255
-            preds = model(img_tensor).softmax(1)[:, 1]
-            
-            idx_tensor = torch.tensor(idx_list, device=device)
-            unique_indices = torch.unique(idx_tensor)
-            max_preds = [torch.max(preds[idx_tensor == i]) for i in unique_indices]
-            final_pred = torch.stack(max_preds).mean().item()
-
-    except Exception as e:
-        final_pred = 0.5
-        
-    return final_pred
-
-def main(args):
-    # --- Dataset Initialization ---
     if args.dataset == 'FFIW':
-        video_list, target_list = init_ffiw()
+        video_list,target_list=init_ffiw()
     elif args.dataset == 'FF':
-        video_list, target_list = init_ff()
+        video_list,target_list=init_ff()
     elif args.dataset == 'DFD':
-        video_list, target_list = init_dfd()
+        video_list,target_list=init_dfd()
     elif args.dataset == 'DFDC':
-        video_list, target_list = init_dfdc()
+        video_list,target_list=init_dfdc()
     elif args.dataset == 'DFDCP':
-        video_list, target_list = init_dfdcp()
+        video_list,target_list=init_dfdcp()
     elif args.dataset == 'CDF':
-        video_list, target_list = init_cdf()
+        video_list,target_list=init_cdf()
     else:
-        raise NotImplementedError
+        NotImplementedError
 
-    # --- Parallel Processing Setup ---
-    num_workers = args.num_workers
-    print(f"Starting evaluation with {num_workers} parallel workers on device '{args.device}'...")
-    
-    task_func = partial(process_video, n_frames=args.n_frames)
-    initializer = partial(init_worker, args.weight_name, args.device)
+    output_list=[]
+    for filename in tqdm(video_list):
+        try:
+            face_list,idx_list=extract_frames(filename,args.n_frames,face_detector)
 
-    output_list = []
-    with multiprocessing.Pool(processes=num_workers, initializer=initializer) as pool:
-        for result in tqdm(pool.imap(task_func, video_list), total=len(video_list)):
-            output_list.append(result)
+            with torch.no_grad():
+                img=torch.tensor(face_list).to(device).float()/255
+                pred=model(img).softmax(1)[:,1]
+                
+                
+            pred_list=[]
+            idx_img=-1
+            for i in range(len(pred)):
+                if idx_list[i]!=idx_img:
+                    pred_list.append([])
+                    idx_img=idx_list[i]
+                pred_list[-1].append(pred[i].item())
+            pred_res=np.zeros(len(pred_list))
+            for i in range(len(pred_res)):
+                pred_res[i]=max(pred_list[i])
+            pred=pred_res.mean()
+        except Exception as e:
+            print(e)
+            pred=0.5
+        output_list.append(pred)
 
-    auc = roc_auc_score(target_list, output_list)
-    print(f'\n{args.dataset} | AUC: {auc:.4f}')
+    auc=roc_auc_score(target_list,output_list)
+    print(f'{args.dataset}| AUC: {auc:.4f}')
 
-if __name__ == '__main__':
-    seed = 1
+
+if __name__=='__main__':
+
+    seed=1
     random.seed(seed)
     torch.manual_seed(seed)
     np.random.seed(seed)
@@ -122,17 +107,14 @@ if __name__ == '__main__':
     torch.backends.cudnn.deterministic = True
     torch.backends.cudnn.benchmark = False
 
-    parser = argparse.ArgumentParser(description="Fast, parallelized deepfake detection evaluation.")
-    parser.add_argument('-w', dest='weight_name', type=str, required=True, help="Path to the trained model weights (.tar file)")
-    parser.add_argument('-d', dest='dataset', type=str, required=True, help="Name of the dataset to evaluate (e.g., FF, DFD)")
-    parser.add_argument('-n', dest='n_frames', default=32, type=int, help="Number of frames to extract per video")
-    parser.add_argument('--num-workers', dest='num_workers', default=4, type=int, help="Number of parallel worker processes to spawn")
-    parser.add_argument('--device', dest='device', default='cuda', type=str, help="Device to use for inference (e.g., 'cuda', 'cuda:0', 'cpu')")
-    args = parser.parse_args()
+    device = torch.device('cuda')
 
-    # Pre-load models in the main process to ensure weights are downloaded and cached.
-    # This must be done BEFORE the multiprocessing pool is created.
-    preload_models()
+    parser=argparse.ArgumentParser()
+    parser.add_argument('-w',dest='weight_name',type=str, help='Path to model weights (.pth file)')
+    parser.add_argument('-d',dest='dataset',type=str, help='Dataset name (FFIW, FF, DFD, DFDC, DFDCP, CDF)')
+    parser.add_argument('-n',dest='n_frames',default=32,type=int, help='Number of frames to extract')
+    parser.add_argument('--compressed', action='store_true', 
+                        help='Use this flag if loading a compressed model (8-bit or 16-bit quantized)')
+    args=parser.parse_args()
 
-    multiprocessing.set_start_method('spawn', force=True)
     main(args)

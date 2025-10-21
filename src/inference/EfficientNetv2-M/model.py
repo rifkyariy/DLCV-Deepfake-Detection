@@ -15,6 +15,31 @@ sys.path.insert(0, src_dir)
 
 from utils.sam import SAM 
 
+def decompress_state_dict(compressed_dict):
+    """
+    Decompress the state dictionary back to float32
+    Handles both compressed and regular state dicts
+    """
+    state_dict = {}
+    
+    for key, value in compressed_dict.items():
+        if isinstance(value, dict) and 'quantized' in value:
+            # Dequantize
+            quantized = value['quantized']
+            min_val = value['min']
+            scale = value['scale']
+            
+            decompressed = quantized.float() * scale + min_val
+            state_dict[key] = decompressed.reshape(value['shape'])
+        else:
+            # Convert float16 back to float32 if needed
+            if isinstance(value, torch.Tensor) and value.dtype == torch.float16:
+                state_dict[key] = value.float()
+            else:
+                state_dict[key] = value
+    
+    return state_dict
+
 class Detector(nn.Module):
     """
     A deepfake detector model using EfficientNetV2-M as the backbone
@@ -55,6 +80,34 @@ class Detector(nn.Module):
     def forward(self, x):
         """Defines the forward pass of the model."""
         return self.net(x)
+    
+    def load_compressed_state_dict(self, state_dict_path, strict=True):
+        """
+        Load state dict from either compressed or regular checkpoint
+        
+        Args:
+            state_dict_path: Path to .pth file
+            strict: Whether to strictly enforce that the keys match
+        """
+        # Load the state dict
+        checkpoint = torch.load(state_dict_path, map_location='cpu')
+        
+        # Check if it's compressed
+        is_compressed = False
+        for key, value in checkpoint.items():
+            if isinstance(value, dict) and 'quantized' in value:
+                is_compressed = True
+                break
+        
+        # Decompress if needed
+        if is_compressed:
+            print("Detected compressed checkpoint, decompressing...")
+            state_dict = decompress_state_dict(checkpoint)
+        else:
+            state_dict = checkpoint
+        
+        # Load into model
+        return self.load_state_dict(state_dict, strict=strict)
     
     def training_step(self, x, target):
         """
