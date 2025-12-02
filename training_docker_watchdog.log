@@ -1,0 +1,50 @@
+
+[1;33m[WATCHDOG 23:12:18] FSBI Watchdog | GPU: 0 | W&B: FSBI-Deepfake-Detection[0m
+
+[1;33m[WATCHDOG 23:12:18] Setting up Docker container...[0m
+
+[1;33m[WATCHDOG 23:12:18] Installing Python dependencies...[0m
+
+[1;33m[WATCHDOG 23:12:48] Authenticating W&B...[0m
+
+[1;33m[WATCHDOG 23:12:49] Container setup complete.[0m
+
+[1;33m[WATCHDOG 23:12:49] Starting training attempt 1/20[0m
+
+[1;33m[WATCHDOG 23:12:49] Found existing checkpoint, will resume training[0m
+
+[1;33m[WATCHDOG 23:12:49] Process started. Streaming logs below...[0m
+
+[1;33m[WATCHDOG 23:12:49] ----------------------------------------[0m
+
+[1;33m[WATCHDOG 23:25:41] FSBI Watchdog | GPU: 0 | W&B: FSBI-Deepfake-Detection[0m
+
+[1;33m[WATCHDOG 23:25:41] Setting up Docker container...[0m
+
+[1;33m[WATCHDOG 23:25:42] Installing Python dependencies...[0m
+
+[1;33m[WATCHDOG 23:26:13] Authenticating W&B...[0m
+
+[1;33m[WATCHDOG 23:26:14] Container setup complete.[0m
+
+[1;33m[WATCHDOG 23:26:14] Starting training attempt 1/20[0m
+
+[1;33m[WATCHDOG 23:26:14] Process started. Streaming logs below...[0m
+
+[1;33m[WATCHDOG 23:26:14] ----------------------------------------[0m
+
+[1;33m[WATCHDOG 23:29:14] FSBI Watchdog | GPU: 0 | W&B: FSBI-Deepfake-Detection[0m
+
+[1;33m[WATCHDOG 23:29:14] Setting up Docker container...[0m
+
+[1;33m[WATCHDOG 23:29:15] Installing Python dependencies...[0m
+
+[1;33m[WATCHDOG 23:29:44] Authenticating W&B...[0m
+
+[1;33m[WATCHDOG 23:29:45] Container setup complete.[0m
+
+[1;33m[WATCHDOG 23:29:45] Starting training attempt 1/20[0m
+
+[1;33m[WATCHDOG 23:29:45] Process started. Streaming logs below...[0m
+
+[1;33m[WATCHDOG 23:29:45] ----------------------------------------[0m

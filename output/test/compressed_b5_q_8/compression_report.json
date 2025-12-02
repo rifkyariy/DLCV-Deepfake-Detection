@@ -1,0 +1,18 @@
+{
+  "compression": {
+    "quantize_bits": 8,
+    "prune_amount": 0.0,
+    "size_before_mb": 108.7869644165039,
+    "size_after_mb": 27.884668350219727,
+    "checkpoint": "output/compressed_b5_q_8/efficientnetb5_compressed_8bit_pr0.pth"
+  },
+  "evaluation": {
+    "baseline": {
+      "auc": 0.954857898215466
+    },
+    "compressed": {
+      "auc": 0.7588400528750826
+    }
+  },
+  "visuals_dir": "visualizations"
+}

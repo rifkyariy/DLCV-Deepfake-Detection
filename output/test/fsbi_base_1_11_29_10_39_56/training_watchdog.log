@@ -1,0 +1,4 @@
+[Sat Nov 29 04:37:49 UTC 2025] Watchdog training started
+[Sat Nov 29 04:38:21 UTC 2025] Watchdog training started
+[Sat Nov 29 04:55:22 UTC 2025] WARNING: GPU idle for 601s (timeout: 600s)
+[Sat Nov 29 04:55:22 UTC 2025] Killing hung training process...

@@ -1,0 +1,191 @@
+[2025-11-29 13:08:10] Loading WANDB_API_KEY from .env file...
+[2025-11-29 13:08:11] ==========================================
+[2025-11-29 13:08:11] FSBI Training Watchdog Started
+[2025-11-29 13:08:11] ==========================================
+[2025-11-29 13:08:11] Container: fsbi_training
+[2025-11-29 13:08:11] GPU: 0
+[2025-11-29 13:08:11] Timeout: 300s
+[2025-11-29 13:08:11] Max Retries: 20
+[2025-11-29 13:08:11] ==========================================
+[2025-11-29 13:08:11] Setting up Docker container...
+[2025-11-29 13:08:11] Starting new container 'fsbi_training'...
+[2025-11-29 13:08:18] Loading WANDB_API_KEY from .env file...
+[2025-11-29 13:08:18] ==========================================
+[2025-11-29 13:08:18] FSBI Training Watchdog Started
+[2025-11-29 13:08:18] ==========================================
+[2025-11-29 13:08:18] Container: fsbi_training
+[2025-11-29 13:08:18] GPU: 0
+[2025-11-29 13:08:18] Timeout: 300s
+[2025-11-29 13:08:18] Max Retries: 20
+[2025-11-29 13:08:18] ==========================================
+[2025-11-29 13:08:18] Setting up Docker container...
+[2025-11-29 13:08:18] Starting new container 'fsbi_training'...
+[2025-11-29 13:08:22] Installing Python dependencies...
+[2025-11-29 13:08:34] Container setup complete.
+[2025-11-29 13:08:34] Starting training attempt 1/20
+[2025-11-29 13:08:34] Found existing checkpoint, will resume training
+[2025-11-29 13:08:34] Training process started in container
+[2025-11-29 13:09:14] Training process died. Last output:
+[2025-11-29 13:10:46] Loading WANDB_API_KEY from .env file...
+[2025-11-29 13:10:46] ==========================================
+[2025-11-29 13:10:46] FSBI Training Watchdog Started
+[2025-11-29 13:10:46] ==========================================
+[2025-11-29 13:10:46] Container: fsbi_training
+[2025-11-29 13:10:46] GPU: 0
+[2025-11-29 13:10:46] Timeout: 300s
+[2025-11-29 13:10:46] Max Retries: 20
+[2025-11-29 13:10:46] ==========================================
+[2025-11-29 13:10:46] Setting up Docker container...
+[2025-11-29 13:10:46] Stopping existing container...
+[2025-11-29 13:10:56] Starting new container 'fsbi_training'...
+[2025-11-29 13:11:00] Installing Python dependencies...
+[2025-11-29 13:11:11] Container setup complete.
+[2025-11-29 13:11:11] Starting training attempt 1/20
+[2025-11-29 13:11:11] Training process started in container
+[2025-11-29 13:25:53] Training process died. Last output:
+[2025-11-29 13:31:47] Loading WANDB_API_KEY from .env file...
+[2025-11-29 13:31:47] ==========================================
+[2025-11-29 13:31:47] FSBI Training Watchdog Started
+[2025-11-29 13:31:47] ==========================================
+[2025-11-29 13:31:47] Container: fsbi_training
+[2025-11-29 13:31:47] GPU: 0
+[2025-11-29 13:31:47] Timeout: 300s
+[2025-11-29 13:31:47] Max Retries: 20
+[2025-11-29 13:31:47] ==========================================
+[2025-11-29 13:31:47] Setting up Docker container...
+[2025-11-29 13:31:47] Stopping existing container...
+[2025-11-29 18:08:36] Loading WANDB_API_KEY from .env file...
+[2025-11-29 18:08:36] ==========================================
+[2025-11-29 18:08:36] FSBI Training Watchdog Started
+[2025-11-29 18:08:36] ==========================================
+[2025-11-29 18:08:36] Container: fsbi_training
+[2025-11-29 18:08:36] GPU: 0
+[2025-11-29 18:08:36] Timeout: 300s
+[2025-11-29 18:08:36] Max Retries: 20
+[2025-11-29 18:08:36] ==========================================
+[2025-11-29 18:08:36] Setting up Docker container...
+[2025-11-29 18:08:36] Starting new container 'fsbi_training'...
+[2025-11-29 18:08:39] Loading WANDB_API_KEY from .env file...
+[2025-11-29 18:08:39] ==========================================
+[2025-11-29 18:08:39] FSBI Training Watchdog Started
+[2025-11-29 18:08:39] ==========================================
+[2025-11-29 18:08:39] Container: fsbi_training
+[2025-11-29 18:08:39] GPU: 0
+[2025-11-29 18:08:39] Timeout: 300s
+[2025-11-29 18:08:39] Max Retries: 20
+[2025-11-29 18:08:39] ==========================================
+[2025-11-29 18:08:39] Setting up Docker container...
+[2025-11-29 18:08:39] Starting new container 'fsbi_training'...
+[2025-11-29 18:08:39] Installing Python dependencies...
+[2025-11-29 18:09:08] Container setup complete.
+[2025-11-29 18:09:08] Starting training attempt 1/20
+[2025-11-29 18:09:09] Found existing checkpoint, will resume training
+[2025-11-29 18:09:09] Training process started in container
+[2025-11-29 18:16:09] Loading WANDB_API_KEY from .env file...
+[2025-11-29 18:16:09] ==========================================
+[2025-11-29 18:16:09] FSBI Training Watchdog Started
+[2025-11-29 18:16:09] ==========================================
+[2025-11-29 18:16:09] Container: fsbi_training
+[2025-11-29 18:16:09] GPU: 0
+[2025-11-29 18:16:09] Timeout: 300s
+[2025-11-29 18:16:09] Max Retries: 20
+[2025-11-29 18:16:09] ==========================================
+[2025-11-29 18:16:09] Setting up Docker container...
+[2025-11-29 18:16:09] Stopping existing container...
+[2025-11-29 18:16:19] Starting new container 'fsbi_training'...
+[2025-11-29 18:16:20] Installing Python dependencies...
+[2025-11-29 18:16:49] Container setup complete.
+[2025-11-29 18:16:49] Starting training attempt 1/20
+[2025-11-29 18:16:49] Training process started in container
+[2025-11-29 18:30:08] Loading WANDB_API_KEY from .env file...
+[2025-11-29 18:30:08] ==========================================
+[2025-11-29 18:30:08] FSBI Training Watchdog Started
+[2025-11-29 18:30:08] ==========================================
+[2025-11-29 18:30:08] Container: fsbi_training
+[2025-11-29 18:30:08] GPU: 0
+[2025-11-29 18:30:08] W&B Project: FSBI-Deepfake-Detection
+[2025-11-29 18:30:08] ==========================================
+[2025-11-29 18:30:08] Setting up Docker container...
+[2025-11-29 18:30:08] Stopping existing container...
+[2025-11-29 18:30:18] Starting new container 'fsbi_training'...
+[2025-11-29 18:30:19] Installing Python dependencies...
+[2025-11-29 18:30:48] Container setup complete.
+[2025-11-29 18:30:48] Starting training attempt 1/20
+[2025-11-29 18:30:48] Found existing checkpoint, will resume training
+[2025-11-29 18:30:49] Training process started in container
+
+[1;33m[WATCHDOG 18:35:53] FSBI Watchdog | GPU: 0 | W&B: FSBI-Deepfake-Detection[0m
+
+[1;33m[WATCHDOG 18:35:53] Setting up Docker container...[0m
+
+[1;33m[WATCHDOG 18:35:53] Installing Python dependencies...[0m
+
+[1;33m[WATCHDOG 18:35:57] Authenticating W&B...[0m
+
+[1;33m[WATCHDOG 18:36:25] FSBI Watchdog | GPU: 0 | W&B: FSBI-Deepfake-Detection[0m
+
+[1;33m[WATCHDOG 18:36:25] Setting up Docker container...[0m
+
+[1;33m[WATCHDOG 18:36:37] Installing Python dependencies...[0m
+
+[1;33m[WATCHDOG 18:37:06] Authenticating W&B...[0m
+
+[1;33m[WATCHDOG 18:37:07] Container setup complete.[0m
+
+[1;33m[WATCHDOG 18:37:07] Starting training attempt 1/20[0m
+
+[1;33m[WATCHDOG 18:37:08] Process started. Streaming logs below...[0m
+
+[1;33m[WATCHDOG 18:37:08] ----------------------------------------[0m
+
+[1;33m[WATCHDOG 18:39:08] FSBI Watchdog | GPU: 0 | W&B: FSBI-Deepfake-Detection[0m
+
+[1;33m[WATCHDOG 18:39:08] Setting up Docker container...[0m
+
+[1;33m[WATCHDOG 18:39:09] Installing Python dependencies...[0m
+
+[1;33m[WATCHDOG 18:39:38] Authenticating W&B...[0m
+
+[1;33m[WATCHDOG 18:39:39] Container setup complete.[0m
+
+[1;33m[WATCHDOG 18:39:39] Starting training attempt 1/20[0m
+
+[1;33m[WATCHDOG 18:39:40] Process started. Streaming logs below...[0m
+
+[1;33m[WATCHDOG 18:39:40] ----------------------------------------[0m
+
+[1;33m[WATCHDOG 23:07:11] FSBI Watchdog | GPU: 0 | W&B: FSBI-Deepfake-Detection[0m
+
+[1;33m[WATCHDOG 23:07:11] Setting up Docker container...[0m
+
+[1;33m[WATCHDOG 23:07:22] Installing Python dependencies...[0m
+
+[1;33m[WATCHDOG 23:07:53] Authenticating W&B...[0m
+
+[1;33m[WATCHDOG 23:07:54] Container setup complete.[0m
+
+[1;33m[WATCHDOG 23:07:54] Starting training attempt 1/20[0m
+
+[1;33m[WATCHDOG 23:07:54] Found existing checkpoint, will resume training[0m
+
+[1;33m[WATCHDOG 23:07:54] Process started. Streaming logs below...[0m
+
+[1;33m[WATCHDOG 23:07:54] ----------------------------------------[0m
+
+[1;33m[WATCHDOG 23:09:41] FSBI Watchdog | GPU: 0 | W&B: FSBI-Deepfake-Detection[0m
+
+[1;33m[WATCHDOG 23:09:41] Setting up Docker container...[0m
+
+[1;33m[WATCHDOG 23:09:42] Installing Python dependencies...[0m
+
+[1;33m[WATCHDOG 23:10:12] Authenticating W&B...[0m
+
+[1;33m[WATCHDOG 23:10:13] Container setup complete.[0m
+
+[1;33m[WATCHDOG 23:10:13] Starting training attempt 1/20[0m
+
+[1;33m[WATCHDOG 23:10:13] Found existing checkpoint, will resume training[0m
+
+[1;33m[WATCHDOG 23:10:13] Process started. Streaming logs below...[0m
+
+[1;33m[WATCHDOG 23:10:13] ----------------------------------------[0m

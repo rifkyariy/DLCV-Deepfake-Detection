@@ -1,0 +1,14 @@
+{
+  "activation_shape": [
+    1,
+    2048
+  ],
+  "gradient_shape": [
+    1,
+    2048
+  ],
+  "cam_min": 0.0,
+  "cam_max": 1.0,
+  "cam_mean": 0.3312866687774658,
+  "cam_std": 0.06933664530515671
+}

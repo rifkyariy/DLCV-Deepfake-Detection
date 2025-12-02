@@ -1,0 +1,18 @@
+{
+  "compression": {
+    "backbone": "b5",
+    "quantize_bits": 16,
+    "size_before_mb": 108.7869644165039,
+    "size_after_mb": 54.656789779663086
+  },
+  "evaluation": {
+    "baseline": {
+      "model_mb": 108.7869644165039,
+      "auc": 0.9288169200264375
+    },
+    "compressed": {
+      "model_mb": 54.656789779663086,
+      "auc": 0.9289986781229347
+    }
+  }
+}

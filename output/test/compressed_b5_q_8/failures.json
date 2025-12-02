@@ -1,0 +1,11 @@
+{
+  "baseline_false_negatives": [],
+  "compressed_false_negatives": [
+    {
+      "video": "data/Celeb-DF-v2/Celeb-synthesis/videos/id10_id11_0001.mp4",
+      "score": 0.387165516091045,
+      "ground_truth": "Fake",
+      "saved_frames_dir": "output/compressed_b5_q_8/failure_samples/compressed/id10_id11_0001"
+    }
+  ]
+}
